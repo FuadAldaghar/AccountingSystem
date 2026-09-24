@@ -38,15 +38,36 @@ namespace AccountingSystem.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var account = await GetByIdAsync(id);
 
-            if (account != null)
+            if (account == null)
+            {
+                return false;
+            }
+
+            try
             {
                 _context.Accounts.Remove(account);
                 await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
             }
         }
+        //public async Task DeleteAsync(int id)
+        //{
+        //    var account = await GetByIdAsync(id);
+
+        //    if (account != null)
+        //    {
+        //        _context.Accounts.Remove(account);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
     }
 }

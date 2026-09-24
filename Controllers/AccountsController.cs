@@ -84,13 +84,32 @@ namespace AccountingSystem.Controllers
         // حذف الحساب
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Delete(int id)
         {
-            await _accountService.DeleteAsync(id);
+            var deleted = await _accountService.DeleteAsync(id);
 
-            TempData["Success"] = "تم حذف الحساب بنجاح.";
+            if (deleted)
+            {
+                TempData["Success"] = "تم حذف الحساب بنجاح.";
+            }
+            else
+            {
+                TempData["Error"] = "لا يمكن حذف الحساب لأنه مرتبط بحركات أو فواتير موجودة في النظام.";
+            }
 
             return RedirectToAction(nameof(Index));
         }
+
+
+
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    await _accountService.DeleteAsync(id);
+
+        //    TempData["Success"] = "تم حذف الحساب بنجاح.";
+
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

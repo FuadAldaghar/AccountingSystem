@@ -99,20 +99,42 @@
 
 
         <!-- Main Content -->
-        <main class="main-content">
+      <main class="main-content">
 
-            <div class="page-container">
+    <div class="page-container">
 
-                @RenderBody()
 
-            </div>
+        @RenderBody()
 
-        </main>
+    </div>
+
+</main>
 
     </div>
 
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/site.js"></script>
+
+@if (TempData["Success"] != null)
+{
+    <script>
+        showMessageBox(
+            "تمت العملية",
+            "@TempData["Success"]"
+        );
+    </script>
+}
+else if (TempData["Error"] != null)
+{
+    <script>
+        showMessageBox(
+            "تنبيه",
+            "@TempData["Error"]"
+        );
+    </script>
+}
+
 
 </body>
 
