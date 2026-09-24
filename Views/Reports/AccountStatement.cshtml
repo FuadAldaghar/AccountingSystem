@@ -1,84 +1,189 @@
 ﻿@model List<AccountingSystem.Models.AccountStatementViewModel>
 
-<h1>كشف حساب</h1>
-
-<form asp-action="AccountStatement" method="get">
-
+<div class="page-header">
     <div>
-        <label>الحساب</label>
+        <h1>كشف الحساب</h1>
+        <p class="text-muted">
+            عرض جميع العمليات والحركات المالية للحساب المحدد
+        </p>
+    </div>
+</div>
 
-        <select name="accountId">
+<div class="card report-filter-card">
 
-            <option value="0">-- اختر الحساب --</option>
-
-            @foreach (var account in ViewBag.Accounts)
-            {
-                <option value="@account.AccountId"
-                        selected="@(account.AccountId == (int)ViewBag.SelectedAccountId)">
-                    @account.AccountNumber - @account.AccountName
-                </option>
-            }
-
-        </select>
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">اختيار الحساب</h2>
+            <p class="text-muted">
+                حدد الحساب لعرض كشف حركته
+            </p>
+        </div>
     </div>
 
-    <br />
+    <form asp-action="AccountStatement" method="get">
 
-    <button type="submit">عرض الكشف</button>
+        <div class="form-group">
 
-</form>
+            <label class="form-label">
+                الحساب
+            </label>
 
-<br />
+            <select name="accountId" class="form-select">
+
+                <option value="0">
+                    -- اختر الحساب --
+                </option>
+
+                @foreach (var account in ViewBag.Accounts)
+                {
+                    <option value="@account.AccountId"
+                            selected="@(account.AccountId == (int)ViewBag.SelectedAccountId)">
+                        @account.AccountNumber - @account.AccountName
+                    </option>
+                }
+
+            </select>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="btn btn-primary">
+                عرض الكشف
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
 
 @if (Model.Any())
 {
-    <table>
-        <thead>
-            <tr>
-                <th>التاريخ</th>
-                <th>نوع العملية</th>
-                <th>رقم العملية</th>
-                <th>البيان</th>
-                <th>عليه</th>
-                <th>له</th>
-                <th>الرصيد</th>
-            </tr>
-        </thead>
+    <div class="card report-card">
 
-        <tbody>
-            @foreach (var row in Model)
-            {
-                <tr>
-                    <td>@row.Date.ToShortDateString()</td>
-                    <td>@row.OperationType</td>
-                    <td>@row.ReferenceNumber</td>
-                    <td>@row.Description</td>
-                    <td>@row.Debit</td>
-                    <td>@row.Credit</td>
-                    <td>@row.Balance</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        <div class="card-header">
 
-    <br />
+            <div>
+                <h2 class="card-title">
+                    حركات الحساب
+                </h2>
 
-    <div>
-        <strong>إجمالي عليه:</strong>
-        @Model.Sum(x => x.Debit)
+                <p class="text-muted">
+                    سجل العمليات المالية للحساب المحدد
+                </p>
+            </div>
+
+        </div>
+
+        <div class="table-container">
+
+            <table class="table">
+
+                <thead>
+
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>نوع العملية</th>
+                        <th>رقم العملية</th>
+                        <th>البيان</th>
+                        <th>عليه</th>
+                        <th>له</th>
+                        <th>الرصيد</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var row in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @row.Date.ToShortDateString()
+                            </td>
+
+                            <td>
+                                <span class="badge badge-info">
+                                    @row.OperationType
+                                </span>
+                            </td>
+
+                            <td>
+                                @row.ReferenceNumber
+                            </td>
+
+                            <td>
+                                @row.Description
+                            </td>
+
+                            <td>
+                                @row.Debit
+                            </td>
+
+                            <td>
+                                @row.Credit
+                            </td>
+
+                            <td>
+                                <strong>
+                                    @row.Balance
+                                </strong>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
 
-    <div>
-        <strong>إجمالي له:</strong>
-        @Model.Sum(x => x.Credit)
-    </div>
 
-    <div>
-        <strong>الرصيد النهائي:</strong>
-        @Model.Last().Balance
+    <div class="report-summary-grid">
+
+        <div class="report-summary-card">
+            <span class="summary-label">
+                إجمالي عليه
+            </span>
+
+            <strong class="summary-value">
+                @Model.Sum(x => x.Debit)
+            </strong>
+        </div>
+
+
+        <div class="report-summary-card">
+            <span class="summary-label">
+                إجمالي له
+            </span>
+
+            <strong class="summary-value">
+                @Model.Sum(x => x.Credit)
+            </strong>
+        </div>
+
+
+        <div class="report-summary-card">
+            <span class="summary-label">
+                الرصيد النهائي
+            </span>
+
+            <strong class="summary-value">
+                @Model.Last().Balance
+            </strong>
+        </div>
+
     </div>
 }
 else
 {
-    <p>لا توجد حركات لهذا الحساب.</p>
+    <div class="alert alert-info">
+        لا توجد حركات لهذا الحساب.
+    </div>
 }

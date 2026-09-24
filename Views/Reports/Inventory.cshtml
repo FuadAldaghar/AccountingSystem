@@ -1,34 +1,108 @@
 ﻿@model List<AccountingSystem.Models.InventoryReportViewModel>
 
-<h1>تقرير مخزون الأصناف</h1>
+<div class="page-header">
+    <div>
+        <h1>تقرير مخزون الأصناف</h1>
+        <p class="text-muted">
+            عرض الكميات المشتراة والمباعة والرصيد الحالي لكل صنف
+        </p>
+    </div>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>رقم الصنف</th>
-            <th>اسم الصنف</th>
-            <th>الوحدة</th>
-            <th>الكمية المشتراة</th>
-            <th>الكمية المباعة</th>
-            <th>المخزون</th>
-        </tr>
-    </thead>
+<div class="card report-card">
 
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ItemNumber</td>
-                <td>@item.ItemName</td>
-                <td>@item.Unit</td>
-                <td>@item.PurchasedQuantity</td>
-                <td>@item.SoldQuantity</td>
-                <td>@item.StockQuantity</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">حركة المخزون</h2>
+            <p class="text-muted">تقرير الكميات المتوفرة حسب الأصناف</p>
+        </div>
+    </div>
 
-<br />
+    <div class="table-container">
 
-<a asp-controller="Home" asp-action="Index">العودة للرئيسية</a>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>رقم الصنف</th>
+                    <th>اسم الصنف</th>
+                    <th>الوحدة</th>
+                    <th>الكمية المشتراة</th>
+                    <th>الكمية المباعة</th>
+                    <th>المخزون الحالي</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>@item.ItemNumber</strong>
+                            </td>
+
+                            <td>
+                                @item.ItemName
+                            </td>
+
+                            <td>
+                                <span class="badge badge-info">
+                                    @item.Unit
+                                </span>
+                            </td>
+
+                            <td>
+                                @item.PurchasedQuantity
+                            </td>
+
+                            <td>
+                                @item.SoldQuantity
+                            </td>
+
+                            <td>
+                                @if (item.StockQuantity > 0)
+                                {
+                                    <span class="badge badge-success">
+                                        @item.StockQuantity
+                                    </span>
+                                }
+                                else if (item.StockQuantity == 0)
+                                {
+                                    <span class="badge badge-warning">
+                                        0
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">
+                                        @item.StockQuantity
+                                    </span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            لا توجد بيانات للمخزون حاليًا.
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
