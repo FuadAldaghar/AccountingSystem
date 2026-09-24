@@ -1,0 +1,139 @@
+﻿@model AccountingSystem.Models.PurchaseInvoice
+
+@{
+var details = Model.Details.ToList();
+var accounts = ViewBag.Accounts as IEnumerable<AccountingSystem.Models.Account>
+?? Enumerable.Empty<AccountingSystem.Models.Account>();
+
+
+var items = ViewBag.Items as IEnumerable<AccountingSystem.Models.Item>
+            ?? Enumerable.Empty<AccountingSystem.Models.Item>();
+
+
+}
+
+<h1>تعديل فاتورة شراء</h1>
+
+<form asp-action="Edit" method="post">
+
+```
+<input type="hidden" asp-for="PurchaseInvoiceId" />
+
+<div asp-validation-summary="All"></div>
+
+<div>
+    <label>رقم الفاتورة</label>
+    <input asp-for="InvoiceNumber" />
+</div>
+
+<br />
+
+<div>
+    <label>التاريخ</label>
+    <input asp-for="InvoiceDate" type="date" />
+</div>
+
+<br />
+
+<div>
+    <label>الدفع</label>
+
+    <select asp-for="PaymentType">
+        <option value="نقد">نقد</option>
+        <option value="أجل">أجل</option>
+    </select>
+</div>
+
+<br />
+
+<div>
+    <label>الحساب</label>
+
+    <select asp-for="AccountId">
+
+        @foreach (var account in accounts)
+        {
+            if (account.AccountId == Model.AccountId)
+            {
+                <option value="@account.AccountId" selected>
+                    @account.AccountNumber - @account.AccountName
+                </option>
+            }
+            else
+            {
+                <option value="@account.AccountId">
+                    @account.AccountNumber - @account.AccountName
+                </option>
+            }
+        }
+
+    </select>
+</div>
+
+<h3>التفاصيل</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>الصنف</th>
+            <th>الكمية</th>
+            <th>سعر الوحدة</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @for (int i = 0; i < details.Count; i++)
+        {
+            <tr>
+
+                <td>
+                    <select name="Details[@i].ItemId">
+
+                        @foreach (var item in items)
+                        {
+                            if (item.ItemId == details[i].ItemId)
+                            {
+                                <option value="@item.ItemId" selected>
+                                    @item.ItemName
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.ItemId">
+                                    @item.ItemName
+                                </option>
+                            }
+                        }
+
+                    </select>
+                </td>
+
+                <td>
+                    <input name="Details[@i].Quantity"
+                           value="@details[i].Quantity"
+                           type="number"
+                           step="0.01" />
+                </td>
+
+                <td>
+                    <input name="Details[@i].UnitPrice"
+                           value="@details[i].UnitPrice"
+                           type="number"
+                           step="0.01" />
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<br />
+
+<button type="submit">حفظ التعديل</button>
+
+<a asp-action="Index">إلغاء</a>
+```
+
+</form>

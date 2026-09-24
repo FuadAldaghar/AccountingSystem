@@ -1,0 +1,143 @@
+﻿@model AccountingSystem.Models.SalesInvoice
+
+@{
+    var accounts = ViewBag.Accounts as IEnumerable<AccountingSystem.Models.Account>
+                   ?? Enumerable.Empty<AccountingSystem.Models.Account>();
+
+    var items = ViewBag.Items as IEnumerable<AccountingSystem.Models.Item>
+                ?? Enumerable.Empty<AccountingSystem.Models.Item>();
+}
+
+<h1>إضافة فاتورة بيع</h1>
+
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label>رقم الفاتورة</label>
+        <input asp-for="InvoiceNumber" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>التاريخ</label>
+        <input asp-for="InvoiceDate" type="date" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>الدفع</label>
+
+        <select asp-for="PaymentType">
+            <option value="نقد">نقد</option>
+            <option value="أجل">أجل</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label>الحساب</label>
+
+        <select asp-for="AccountId">
+            <option value="">-- اختر الحساب --</option>
+
+            @foreach (var account in accounts)
+            {
+                <option value="@account.AccountId">
+                    @account.AccountNumber - @account.AccountName
+                </option>
+            }
+        </select>
+    </div>
+
+    <h3>تفاصيل الفاتورة</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>الصنف</th>
+                <th>الوحدة</th>
+                <th>الكمية</th>
+                <th>سعر الوحدة</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @for (int i = 0; i < 5; i++)
+            {
+                <tr>
+
+                    <td>
+                        <select name="Details[@i].ItemId"
+                                class="item-select"
+                                data-unit-target="unit-@i">
+
+                            <option value="">-- اختر الصنف --</option>
+
+                            @foreach (var item in items)
+                            {
+                                <option value="@item.ItemId"
+                                        data-unit="@item.Unit">
+                                    @item.ItemName
+                                </option>
+                            }
+
+                        </select>
+                    </td>
+
+                    <td>
+                        <input type="text"
+                               id="unit-@i"
+                               class="unit-input"
+                               readonly />
+                    </td>
+
+                    <td>
+                        <input name="Details[@i].Quantity"
+                               type="number"
+                               step="0.01"
+                               min="0" />
+                    </td>
+
+                    <td>
+                        <input name="Details[@i].UnitPrice"
+                               type="number"
+                               step="0.01"
+                               min="0" />
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <br />
+
+    <button type="submit">حفظ الفاتورة</button>
+
+    <a asp-action="Index">إلغاء</a>
+
+</form>
+
+<script>
+    document.querySelectorAll(".item-select").forEach(function (select) {
+
+        select.addEventListener("change", function () {
+
+            var selectedOption = this.options[this.selectedIndex];
+
+            var unit = selectedOption.getAttribute("data-unit") || "";
+
+            var targetId = this.getAttribute("data-unit-target");
+
+            document.getElementById(targetId).value = unit;
+        });
+
+    });
+</script>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AccountingSystem.Models.ReceiptVoucher>
+
+<h1>سندات القبض</h1>
+
+<p>
+    <a asp-action="Create">إضافة سند قبض</a>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>رقم السند</th>
+            <th>التاريخ</th>
+            <th>المبلغ</th>
+            <th>اسم الحساب</th>
+            <th>ملاحظات</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var voucher in Model)
+        {
+            <tr>
+                <td>@voucher.VoucherNumber</td>
+                <td>@voucher.VoucherDate.ToShortDateString()</td>
+                <td>@voucher.Amount</td>
+                <td>@voucher.Account?.AccountName</td>
+                <td>@voucher.Notes</td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@voucher.ReceiptVoucherId">
+                        تعديل
+                    </a>
+
+                    |
+
+                    <form asp-action="Delete"
+                          asp-route-id="@voucher.ReceiptVoucherId"
+                          method="post"
+                          style="display:inline">
+
+                        <button type="submit">حذف</button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

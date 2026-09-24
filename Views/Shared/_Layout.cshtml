@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - نظام المحاسبة</title>
+</head>
+
+<body>
+
+    <header>
+
+        <h1>نظام المحاسبة</h1>
+
+        <nav>
+            <a asp-controller="Home" asp-action="Index">
+                الرئيسية
+            </a>
+
+            |
+
+            <a asp-controller="Accounts" asp-action="Index">
+                دليل الحسابات
+            </a>
+
+            |
+
+            <a asp-controller="Items" asp-action="Index">
+                دليل الأصناف
+            </a>
+
+            |
+
+            <a asp-controller="ReceiptVouchers" asp-action="Index">
+                سندات القبض
+            </a>
+
+            |
+
+            <a asp-controller="PaymentVouchers" asp-action="Index">
+                سندات الصرف
+            </a>
+
+            |
+
+            <a asp-controller="PurchaseInvoices" asp-action="Index">
+                فواتير المشتريات
+            </a>
+
+            |
+
+            <a asp-controller="SalesInvoices" asp-action="Index">
+                فواتير المبيعات
+            </a>
+
+            |
+
+            <a asp-controller="Reports" asp-action="Inventory">
+                تقرير المخزون
+            </a>
+
+            |
+
+            <a asp-controller="Reports" asp-action="AccountStatement">
+                كشف الحساب
+            </a>
+        </nav>
+
+    </header>
+
+    <hr />
+
+    <main>
+        @RenderBody()
+    </main>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

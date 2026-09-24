@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AccountingSystem.Models.Account>
+
+<h1>دليل الحسابات</h1>
+
+<p>
+    <a asp-action="Create">إضافة حساب جديد</a>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>رقم الحساب</th>
+            <th>اسم الحساب</th>
+            <th>نوع الحساب</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var account in Model)
+        {
+            <tr>
+                <td>@account.AccountNumber</td>
+                <td>@account.AccountName</td>
+                <td>@account.AccountType</td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@account.AccountId">
+                        تعديل
+                    </a>
+
+                    |
+
+                    <form asp-action="Delete"
+                          asp-route-id="@account.AccountId"
+                          method="post"
+                          style="display:inline">
+
+                        <button type="submit">
+                            حذف
+                        </button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

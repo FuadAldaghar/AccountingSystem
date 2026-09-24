@@ -1,0 +1,35 @@
+﻿@model AccountingSystem.Models.Item
+
+<h1>إضافة صنف</h1>
+
+<form asp-action="Create" method="post">
+
+    <div>
+        <label>رقم الصنف</label>
+        <input asp-for="ItemNumber" />
+        <span asp-validation-for="ItemNumber"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>اسم الصنف</label>
+        <input asp-for="ItemName" />
+        <span asp-validation-for="ItemName"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>الوحدة</label>
+        <input asp-for="Unit" />
+        <span asp-validation-for="Unit"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">حفظ</button>
+
+    <a asp-action="Index">إلغاء</a>
+
+</form>

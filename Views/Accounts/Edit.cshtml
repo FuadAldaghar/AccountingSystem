@@ -1,0 +1,37 @@
+﻿@model AccountingSystem.Models.Account
+
+<h1>تعديل حساب</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="AccountId" />
+
+    <div>
+        <label>رقم الحساب</label>
+        <input asp-for="AccountNumber" />
+        <span asp-validation-for="AccountNumber"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>اسم الحساب</label>
+        <input asp-for="AccountName" />
+        <span asp-validation-for="AccountName"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>نوع الحساب</label>
+        <input asp-for="AccountType" />
+        <span asp-validation-for="AccountType"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">حفظ التعديل</button>
+
+    <a asp-action="Index">إلغاء</a>
+
+</form>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AccountingSystem.Models.Item>
+
+<h1>دليل الأصناف</h1>
+
+<p>
+    <a asp-action="Create">إضافة صنف جديد</a>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>رقم الصنف</th>
+            <th>اسم الصنف</th>
+            <th>الوحدة</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ItemNumber</td>
+                <td>@item.ItemName</td>
+                <td>@item.Unit</td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@item.ItemId">
+                        تعديل
+                    </a>
+
+                    |
+
+                    <form asp-action="Delete"
+                          asp-route-id="@item.ItemId"
+                          method="post"
+                          style="display:inline">
+
+                        <button type="submit">حذف</button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

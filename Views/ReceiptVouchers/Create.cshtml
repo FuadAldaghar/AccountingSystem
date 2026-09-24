@@ -1,0 +1,65 @@
+﻿@model AccountingSystem.Models.ReceiptVoucher
+
+<h1>إضافة سند قبض</h1>
+
+<form asp-action="Create" method="post">
+
+    <div>
+        <label>رقم السند</label>
+        <input asp-for="VoucherNumber" />
+        <span asp-validation-for="VoucherNumber"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>التاريخ</label>
+        <input asp-for="VoucherDate" type="date" />
+        <span asp-validation-for="VoucherDate"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>المبلغ</label>
+        <input asp-for="Amount" type="number" step="0.01" />
+        <span asp-validation-for="Amount"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>الحساب</label>
+
+        <select asp-for="AccountId">
+
+            <option value="">-- اختر الحساب --</option>
+
+            @foreach (var account in ViewBag.Accounts)
+            {
+                <option value="@account.AccountId">
+                    @account.AccountNumber - @account.AccountName
+                </option>
+            }
+
+        </select>
+
+        <span asp-validation-for="AccountId"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>ملاحظات</label>
+        <textarea asp-for="Notes"></textarea>
+        <span asp-validation-for="Notes"></span>
+    </div>
+
+    <br />
+
+    <button type="submit">حفظ</button>
+
+    <a asp-action="Index">إلغاء</a>
+
+</form>
+<div asp-validation-summary="All"></div>

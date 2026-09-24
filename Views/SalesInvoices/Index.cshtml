@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AccountingSystem.Models.SalesInvoice>
+
+<h1>فواتير المبيعات</h1>
+
+<p>
+    <a asp-action="Create">إضافة فاتورة بيع</a>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>رقم الفاتورة</th>
+            <th>التاريخ</th>
+            <th>الدفع</th>
+            <th>الحساب</th>
+            <th>الإجمالي</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr>
+                <td>@invoice.InvoiceNumber</td>
+                <td>@invoice.InvoiceDate.ToShortDateString()</td>
+                <td>@invoice.PaymentType</td>
+                <td>@invoice.Account?.AccountName</td>
+                <td>@invoice.Details.Sum(x => x.Quantity * x.UnitPrice)</td>
+
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@invoice.SalesInvoiceId">
+                        تعديل
+                    </a>
+
+                    |
+
+                    <form asp-action="Delete"
+                          asp-route-id="@invoice.SalesInvoiceId"
+                          method="post"
+                          style="display:inline">
+
+                        <button type="submit">حذف</button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
