@@ -86,7 +86,7 @@ function showDeleteConfirmation(event, message = "هل أنت متأكد أنك 
                     
 function showMessageBox(title, message) {
 
-    window.addEventListener("load", function () {
+   
 
         var overlay = document.createElement("div");
 
@@ -138,10 +138,12 @@ function showMessageBox(title, message) {
 
         overlay.appendChild(box);
         document.body.appendChild(overlay);
+        document.getElementById("confirmDelete").onclick = function () {
+    form.submit();
+};
 
-        document.getElementById("messageBoxOk").addEventListener("click", function () {
-            overlay.remove();
-        });
+        // document.getElementById("messageBoxOk").addEventListener("click", function () {
+        //     overlay.remove();
+        // });
 
-    });
 }
