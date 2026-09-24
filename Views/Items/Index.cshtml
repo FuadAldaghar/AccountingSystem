@@ -1,47 +1,72 @@
 ﻿@model IEnumerable<AccountingSystem.Models.Item>
 
-<h1>دليل الأصناف</h1>
+<div class="page-header">
+    <div>
+        <h1>دليل الأصناف</h1>
+        <p class="text-muted">إدارة الأصناف والوحدات المسجلة في النظام</p>
+    </div>
 
-<p>
-    <a asp-action="Create">إضافة صنف جديد</a>
-</p>
+    <a asp-action="Create" class="btn btn-primary">
+        إضافة صنف جديد
+    </a>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>رقم الصنف</th>
-            <th>اسم الصنف</th>
-            <th>الوحدة</th>
-            <th>الإجراءات</th>
-        </tr>
-    </thead>
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">الأصناف</h2>
+            <span class="text-muted">
+                إجمالي الأصناف: @Model.Count()
+            </span>
+        </div>
+    </div>
 
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ItemNumber</td>
-                <td>@item.ItemName</td>
-                <td>@item.Unit</td>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>رقم الصنف</th>
+                    <th>اسم الصنف</th>
+                    <th>الوحدة</th>
+                    <th>الإجراءات</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@item.ItemId">
-                        تعديل
-                    </a>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ItemNumber</td>
+                        <td>@item.ItemName</td>
+                        <td>
+                            <span class="badge badge-info">
+                                @item.Unit
+                            </span>
+                        </td>
 
-                    |
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@item.ItemId"
+                               class="btn btn-secondary">
+                                تعديل
+                            </a>
+                            </td>
+                        <td>
+                            <form asp-action="Delete"
+                                  asp-route-id="@item.ItemId"
+                                  method="post">
 
-                    <form asp-action="Delete"
-                          asp-route-id="@item.ItemId"
-                          method="post"
-                          style="display:inline">
+                                <button type="submit"
+                                        class="btn btn-danger">
+                                    حذف
+                                </button>
 
-                        <button type="submit">حذف</button>
-
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

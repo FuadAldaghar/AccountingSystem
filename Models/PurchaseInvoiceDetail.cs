@@ -1,10 +1,10 @@
 ﻿namespace AccountingSystem.Models
 {
-    public class SalesInvoiceDetail
+    public class PurchaseInvoiceDetail
     {
-        public int SalesInvoiceDetailId { get; set; }
+        public int PurchaseInvoiceDetailId { get; set; }
 
-    public int SalesInvoiceId { get; set; }
+        public int PurchaseInvoiceId { get; set; }
 
         public int ItemId { get; set; }
 
@@ -14,10 +14,8 @@
 
         public decimal Total { get; private set; }
 
-        public SalesInvoice? SalesInvoice { get; set; }
+        public PurchaseInvoice? PurchaseInvoice { get; set; }
 
         public Item? Item { get; set; }
     }
-
-
 }

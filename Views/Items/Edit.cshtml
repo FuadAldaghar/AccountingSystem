@@ -1,37 +1,62 @@
 ﻿@model AccountingSystem.Models.Item
 
-<h1>تعديل صنف</h1>
-
-<form asp-action="Edit" method="post">
-
-    <input type="hidden" asp-for="ItemId" />
-
+<div class="page-header">
     <div>
-        <label>رقم الصنف</label>
-        <input asp-for="ItemNumber" />
-        <span asp-validation-for="ItemNumber"></span>
+        <h1>تعديل صنف</h1>
+        <p class="text-muted">تعديل بيانات الصنف</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">بيانات الصنف</h2>
     </div>
 
-    <br />
+    <form asp-action="Edit" method="post">
 
-    <div>
-        <label>اسم الصنف</label>
-        <input asp-for="ItemName" />
-        <span asp-validation-for="ItemName"></span>
-    </div>
+        <input type="hidden" asp-for="ItemId" />
 
-    <br />
+        <div class="form-group">
+            <label class="form-label">رقم الصنف</label>
 
-    <div>
-        <label>الوحدة</label>
-        <input asp-for="Unit" />
-        <span asp-validation-for="Unit"></span>
-    </div>
+            <input asp-for="ItemNumber"
+                   class="form-control" />
 
-    <br />
+            <span asp-validation-for="ItemNumber"
+                  class="text-danger"></span>
+        </div>
 
-    <button type="submit">حفظ التعديل</button>
+        <div class="form-group">
+            <label class="form-label">اسم الصنف</label>
 
-    <a asp-action="Index">إلغاء</a>
+            <input asp-for="ItemName"
+                   class="form-control" />
 
-</form>
+            <span asp-validation-for="ItemName"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">الوحدة</label>
+
+            <input asp-for="Unit"
+                   class="form-control" />
+
+            <span asp-validation-for="Unit"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit"
+                    class="btn btn-primary">
+                حفظ التعديل
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                إلغاء
+            </a>
+        </div>
+
+    </form>
+</div>

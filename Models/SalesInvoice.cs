@@ -8,7 +8,7 @@
         public string PaymentType { get; set; } = string.Empty;
         public int AccountId { get; set; }
 
-        public Account Account { get; set; } = null!;
+        public Account? Account { get; set; } = null!;
 
         public ICollection<SalesInvoiceDetail> Details { get; set; }
             = new List<SalesInvoiceDetail>();

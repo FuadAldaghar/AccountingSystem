@@ -1,51 +1,104 @@
 ﻿@model IEnumerable<AccountingSystem.Models.PurchaseInvoice>
 
-<h1>فواتير المشتريات</h1>
+<div class="page-header">
+    <div>
+        <h1>فواتير المشتريات</h1>
+        <p class="text-muted">إدارة ومتابعة فواتير المشتريات</p>
+    </div>
 
-<p>
-    <a asp-action="Create">إضافة فاتورة شراء</a>
-</p>
+    <a asp-action="Create" class="btn btn-primary">
+        إضافة فاتورة شراء
+    </a>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>رقم الفاتورة</th>
-            <th>التاريخ</th>
-            <th>الدفع</th>
-            <th>الحساب</th>
-            <th>الإجمالي</th>
-            <th>الإجراءات</th>
-        </tr>
-    </thead>
+<div class="card">
 
-    <tbody>
-        @foreach (var invoice in Model)
-        {
-            <tr>
-                <td>@invoice.InvoiceNumber</td>
-                <td>@invoice.InvoiceDate.ToShortDateString()</td>
-                <td>@invoice.PaymentType</td>
-                <td>@invoice.Account?.AccountName</td>
-                <td>@invoice.Details.Sum(x => x.Quantity * x.UnitPrice)</td>
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">فواتير المشتريات</h2>
 
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@invoice.PurchaseInvoiceId">
-                        تعديل
-                    </a>
+            <span class="text-muted">
+                إجمالي الفواتير: @Model.Count()
+            </span>
+        </div>
+    </div>
 
-                    |
+    <div class="table-container">
 
-                    <form asp-action="Delete"
-                          asp-route-id="@invoice.PurchaseInvoiceId"
-                          method="post"
-                          style="display:inline">
+        <table class="table">
 
-                        <button type="submit">حذف</button>
+            <thead>
+                <tr>
+                    <th>رقم الفاتورة</th>
+                    <th>التاريخ</th>
+                    <th>الدفع</th>
+                    <th>الحساب</th>
+                    <th>الإجمالي</th>
+                    <th>تعديل</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
 
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <tbody>
+
+                @foreach (var invoice in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @invoice.InvoiceNumber
+                        </td>
+
+                        <td>
+                            @invoice.InvoiceDate.ToShortDateString()
+                        </td>
+
+                        <td>
+                            <span class="badge @(invoice.PaymentType == "نقد"
+                                                                ? "badge-success"
+                                                                : "badge-warning")">
+                                @invoice.PaymentType
+                            </span>
+                        </td>
+
+                        <td>
+                            @invoice.Account?.AccountName
+                        </td>
+
+                        <td>
+                            <strong>
+                                @invoice.Details.Sum(x => x.Quantity * x.UnitPrice).ToString("N2")
+                            </strong>
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@invoice.PurchaseInvoiceId"
+                               class="btn btn-secondary">
+                                تعديل
+                            </a>
+                        </td>
+
+                        <td>
+                            <form asp-action="Delete"
+                                  asp-route-id="@invoice.PurchaseInvoiceId"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="btn btn-danger">
+                                    حذف
+                                </button>
+
+                            </form>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

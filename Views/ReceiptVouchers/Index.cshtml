@@ -1,51 +1,95 @@
 ﻿@model IEnumerable<AccountingSystem.Models.ReceiptVoucher>
 
-<h1>سندات القبض</h1>
+<div class="page-header">
+    <div>
+        <h1>سندات القبض</h1>
+        <p class="text-muted">إدارة سندات القبض المسجلة في النظام</p>
+    </div>
 
-<p>
-    <a asp-action="Create">إضافة سند قبض</a>
-</p>
+    <a asp-action="Create" class="btn btn-primary">
+        إضافة سند قبض
+    </a>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>رقم السند</th>
-            <th>التاريخ</th>
-            <th>المبلغ</th>
-            <th>اسم الحساب</th>
-            <th>ملاحظات</th>
-            <th>الإجراءات</th>
-        </tr>
-    </thead>
+<div class="card">
 
-    <tbody>
-        @foreach (var voucher in Model)
-        {
-            <tr>
-                <td>@voucher.VoucherNumber</td>
-                <td>@voucher.VoucherDate.ToShortDateString()</td>
-                <td>@voucher.Amount</td>
-                <td>@voucher.Account?.AccountName</td>
-                <td>@voucher.Notes</td>
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">سندات القبض</h2>
+            <span class="text-muted">
+                إجمالي السندات: @Model.Count()
+            </span>
+        </div>
+    </div>
 
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@voucher.ReceiptVoucherId">
-                        تعديل
-                    </a>
+    <div class="table-container">
 
-                    |
+        <table class="table">
 
-                    <form asp-action="Delete"
-                          asp-route-id="@voucher.ReceiptVoucherId"
-                          method="post"
-                          style="display:inline">
+            <thead>
+                <tr>
+                    <th>رقم السند</th>
+                    <th>التاريخ</th>
+                    <th>المبلغ</th>
+                    <th>اسم الحساب</th>
+                    <th>ملاحظات</th>
+                    <th>تعديل</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
 
-                        <button type="submit">حذف</button>
+            <tbody>
 
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                @foreach (var voucher in Model)
+                {
+                    <tr>
+
+                        <td>@voucher.VoucherNumber</td>
+
+                        <td>
+                            @voucher.VoucherDate.ToShortDateString()
+                        </td>
+
+                        <td>
+                            <strong>@voucher.Amount</strong>
+                        </td>
+
+                        <td>
+                            @voucher.Account?.AccountName
+                        </td>
+
+                        <td>
+                            @voucher.Notes
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@voucher.ReceiptVoucherId"
+                               class="btn btn-secondary">
+                                تعديل
+                            </a>
+                        </td>
+
+                        <td>
+                            <form asp-action="Delete"
+                                  asp-route-id="@voucher.ReceiptVoucherId"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="btn btn-danger">
+                                    حذف
+                                </button>
+
+                            </form>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

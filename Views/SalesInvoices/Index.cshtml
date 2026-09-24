@@ -1,51 +1,99 @@
 ﻿@model IEnumerable<AccountingSystem.Models.SalesInvoice>
 
-<h1>فواتير المبيعات</h1>
+<div class="page-header">
+    <div>
+        <h1>فواتير المبيعات</h1>
+        <p class="text-muted">إدارة ومتابعة فواتير المبيعات</p>
+    </div>
 
-<p>
-    <a asp-action="Create">إضافة فاتورة بيع</a>
-</p>
+    <a asp-action="Create" class="btn btn-primary">
+        إضافة فاتورة بيع
+    </a>
+</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>رقم الفاتورة</th>
-            <th>التاريخ</th>
-            <th>الدفع</th>
-            <th>الحساب</th>
-            <th>الإجمالي</th>
-            <th>الإجراءات</th>
-        </tr>
-    </thead>
+<div class="card">
 
-    <tbody>
-        @foreach (var invoice in Model)
-        {
-            <tr>
-                <td>@invoice.InvoiceNumber</td>
-                <td>@invoice.InvoiceDate.ToShortDateString()</td>
-                <td>@invoice.PaymentType</td>
-                <td>@invoice.Account?.AccountName</td>
-                <td>@invoice.Details.Sum(x => x.Quantity * x.UnitPrice)</td>
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">فواتير المبيعات</h2>
+            <span class="text-muted">
+                إجمالي الفواتير: @Model.Count()
+            </span>
+        </div>
+    </div>
 
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@invoice.SalesInvoiceId">
-                        تعديل
-                    </a>
+    <div class="table-container">
 
-                    |
+        <table class="table">
 
-                    <form asp-action="Delete"
-                          asp-route-id="@invoice.SalesInvoiceId"
-                          method="post"
-                          style="display:inline">
+            <thead>
+                <tr>
+                    <th>رقم الفاتورة</th>
+                    <th>التاريخ</th>
+                    <th>الدفع</th>
+                    <th>الحساب</th>
+                    <th>الإجمالي</th>
+                    <th>تعديل</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
 
-                        <button type="submit">حذف</button>
+            <tbody>
 
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                @foreach (var invoice in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @invoice.InvoiceNumber
+                        </td>
+
+                        <td>
+                            @invoice.InvoiceDate.ToShortDateString()
+                        </td>
+
+                        <td>
+                            @invoice.PaymentType
+                        </td>
+
+                        <td>
+                            @invoice.Account?.AccountName
+                        </td>
+
+                        <td>
+                            @invoice.Details.Sum(
+                                x => x.Quantity * x.UnitPrice
+                            )
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@invoice.SalesInvoiceId"
+                               class="btn btn-secondary">
+                                تعديل
+                            </a>
+                        </td>
+
+                        <td>
+                            <form asp-action="Delete"
+                                  asp-route-id="@invoice.SalesInvoiceId"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="btn btn-danger">
+                                    حذف
+                                </button>
+
+                            </form>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

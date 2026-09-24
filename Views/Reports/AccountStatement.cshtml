@@ -1,0 +1,84 @@
+﻿@model List<AccountingSystem.Models.AccountStatementViewModel>
+
+<h1>كشف حساب</h1>
+
+<form asp-action="AccountStatement" method="get">
+
+    <div>
+        <label>الحساب</label>
+
+        <select name="accountId">
+
+            <option value="0">-- اختر الحساب --</option>
+
+            @foreach (var account in ViewBag.Accounts)
+            {
+                <option value="@account.AccountId"
+                        selected="@(account.AccountId == (int)ViewBag.SelectedAccountId)">
+                    @account.AccountNumber - @account.AccountName
+                </option>
+            }
+
+        </select>
+    </div>
+
+    <br />
+
+    <button type="submit">عرض الكشف</button>
+
+</form>
+
+<br />
+
+@if (Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>التاريخ</th>
+                <th>نوع العملية</th>
+                <th>رقم العملية</th>
+                <th>البيان</th>
+                <th>عليه</th>
+                <th>له</th>
+                <th>الرصيد</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var row in Model)
+            {
+                <tr>
+                    <td>@row.Date.ToShortDateString()</td>
+                    <td>@row.OperationType</td>
+                    <td>@row.ReferenceNumber</td>
+                    <td>@row.Description</td>
+                    <td>@row.Debit</td>
+                    <td>@row.Credit</td>
+                    <td>@row.Balance</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+
+    <div>
+        <strong>إجمالي عليه:</strong>
+        @Model.Sum(x => x.Debit)
+    </div>
+
+    <div>
+        <strong>إجمالي له:</strong>
+        @Model.Sum(x => x.Credit)
+    </div>
+
+    <div>
+        <strong>الرصيد النهائي:</strong>
+        @Model.Last().Balance
+    </div>
+}
+else
+{
+    <p>لا توجد حركات لهذا الحساب.</p>
+}

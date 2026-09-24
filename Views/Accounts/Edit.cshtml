@@ -1,37 +1,94 @@
-﻿@model AccountingSystem.Models.Account
+﻿
+@model AccountingSystem.Models.Account
 
-<h1>تعديل حساب</h1>
-
-<form asp-action="Edit" method="post">
-
-    <input type="hidden" asp-for="AccountId" />
+<div class="page-header">
 
     <div>
-        <label>رقم الحساب</label>
-        <input asp-for="AccountNumber" />
-        <span asp-validation-for="AccountNumber"></span>
+        <h1>تعديل حساب</h1>
+        <p class="text-muted">
+            تعديل بيانات الحساب
+        </p>
     </div>
 
-    <br />
+</div>
 
-    <div>
-        <label>اسم الحساب</label>
-        <input asp-for="AccountName" />
-        <span asp-validation-for="AccountName"></span>
+
+<div class="card">
+
+    <div class="card-header">
+        <h2 class="card-title">بيانات الحساب</h2>
     </div>
 
-    <br />
 
-    <div>
-        <label>نوع الحساب</label>
-        <input asp-for="AccountType" />
-        <span asp-validation-for="AccountType"></span>
-    </div>
+    <form asp-action="Edit" method="post">
 
-    <br />
+        <input type="hidden"
+               asp-for="AccountId" />
 
-    <button type="submit">حفظ التعديل</button>
 
-    <a asp-action="Index">إلغاء</a>
+        <div class="form-group">
 
-</form>
+            <label class="form-label">
+                رقم الحساب
+            </label>
+
+            <input asp-for="AccountNumber"
+                   class="form-control" />
+
+            <span asp-validation-for="AccountNumber"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                اسم الحساب
+            </label>
+
+            <input asp-for="AccountName"
+                   class="form-control" />
+
+            <span asp-validation-for="AccountName"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                نوع الحساب
+            </label>
+
+            <input asp-for="AccountType"
+                   class="form-control" />
+
+            <span asp-validation-for="AccountType"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button type="submit"
+                    class="btn btn-primary">
+                حفظ التعديل
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                إلغاء
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+

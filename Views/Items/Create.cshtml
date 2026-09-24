@@ -1,35 +1,60 @@
 ﻿@model AccountingSystem.Models.Item
 
-<h1>إضافة صنف</h1>
-
-<form asp-action="Create" method="post">
-
+<div class="page-header">
     <div>
-        <label>رقم الصنف</label>
-        <input asp-for="ItemNumber" />
-        <span asp-validation-for="ItemNumber"></span>
+        <h1>إضافة صنف</h1>
+        <p class="text-muted">إضافة صنف جديد إلى دليل الأصناف</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">بيانات الصنف</h2>
     </div>
 
-    <br />
+    <form asp-action="Create" method="post">
 
-    <div>
-        <label>اسم الصنف</label>
-        <input asp-for="ItemName" />
-        <span asp-validation-for="ItemName"></span>
-    </div>
+        <div class="form-group">
+            <label class="form-label">رقم الصنف</label>
 
-    <br />
+            <input asp-for="ItemNumber"
+                   class="form-control" />
 
-    <div>
-        <label>الوحدة</label>
-        <input asp-for="Unit" />
-        <span asp-validation-for="Unit"></span>
-    </div>
+            <span asp-validation-for="ItemNumber"
+                  class="text-danger"></span>
+        </div>
 
-    <br />
+        <div class="form-group">
+            <label class="form-label">اسم الصنف</label>
 
-    <button type="submit">حفظ</button>
+            <input asp-for="ItemName"
+                   class="form-control" />
 
-    <a asp-action="Index">إلغاء</a>
+            <span asp-validation-for="ItemName"
+                  class="text-danger"></span>
+        </div>
 
-</form>
+        <div class="form-group">
+            <label class="form-label">الوحدة</label>
+
+            <input asp-for="Unit"
+                   class="form-control" />
+
+            <span asp-validation-for="Unit"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit"
+                    class="btn btn-primary">
+                حفظ
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                إلغاء
+            </a>
+        </div>
+
+    </form>
+</div>

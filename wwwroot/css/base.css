@@ -1,0 +1,126 @@
+/* ================================
+   Base / Global Styles
+   ================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-md);
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-normal);
+    color: var(--text-primary);
+    background: var(--bg-body);
+    line-height: 1.6;
+    direction: rtl;
+}
+
+/* ================================
+   Headings
+   ================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    color: var(--text-primary);
+    font-weight: var(--font-bold);
+}
+
+h1 {
+    font-size: var(--font-size-xxl);
+}
+
+h2 {
+    font-size: var(--font-size-xl);
+}
+
+h3 {
+    font-size: var(--font-size-lg);
+}
+
+/* ================================
+   Links
+   ================================ */
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+    a:hover {
+        color: var(--primary-hover);
+    }
+
+/* ================================
+   Images
+   ================================ */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ================================
+   Buttons
+   ================================ */
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* ================================
+   Text Utilities
+   ================================ */
+
+.text-primary {
+    color: var(--primary);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+/* ================================
+   Background Utilities
+   ================================ */
+
+.bg-primary {
+    background: var(--primary);
+}
+
+.bg-surface {
+    background: var(--bg-surface);
+}
+
+.bg-soft {
+    background: var(--bg-soft);
+}
+
+/* ================================
+   Selection
+   ================================ */
+
+::selection {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+}

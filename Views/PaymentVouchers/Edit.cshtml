@@ -1,29 +1,28 @@
-﻿@model AccountingSystem.Models.ReceiptVoucher
+﻿@model AccountingSystem.Models.PaymentVoucher
 
 <div class="page-header">
     <div>
-        <h1>إضافة سند قبض</h1>
-        <p class="text-muted">إضافة سند قبض جديد إلى النظام</p>
+        <h1>تعديل سند صرف</h1>
+        <p class="text-muted">تعديل بيانات سند الصرف</p>
     </div>
 </div>
 
 <div class="card">
 
     <div class="card-header">
-        <h2 class="card-title">بيانات سند القبض</h2>
+        <h2 class="card-title">بيانات سند الصرف</h2>
     </div>
 
-    <form asp-action="Create" method="post">
+    <form asp-action="Edit" method="post">
+
+        <input type="hidden"
+               asp-for="PaymentVoucherId" />
 
         <div class="form-group">
             <label class="form-label">رقم السند</label>
 
             <input asp-for="VoucherNumber"
                    class="form-control" />
-
-            <span asp-validation-for="VoucherNumber"
-                  class="text-danger">
-            </span>
         </div>
 
         <div class="form-group">
@@ -32,10 +31,6 @@
             <input asp-for="VoucherDate"
                    type="date"
                    class="form-control" />
-
-            <span asp-validation-for="VoucherDate"
-                  class="text-danger">
-            </span>
         </div>
 
         <div class="form-group">
@@ -45,10 +40,6 @@
                    type="number"
                    step="0.01"
                    class="form-control" />
-
-            <span asp-validation-for="Amount"
-                  class="text-danger">
-            </span>
         </div>
 
         <div class="form-group">
@@ -56,10 +47,6 @@
 
             <select asp-for="AccountId"
                     class="form-select">
-
-                <option value="">
-                    -- اختر الحساب --
-                </option>
 
                 @foreach (var account in ViewBag.Accounts)
                 {
@@ -69,10 +56,6 @@
                 }
 
             </select>
-
-            <span asp-validation-for="AccountId"
-                  class="text-danger">
-            </span>
         </div>
 
         <div class="form-group">
@@ -81,17 +64,13 @@
             <textarea asp-for="Notes"
                       class="form-control">
             </textarea>
-
-            <span asp-validation-for="Notes"
-                  class="text-danger">
-            </span>
         </div>
 
         <div class="form-actions">
 
             <button type="submit"
                     class="btn btn-primary">
-                حفظ
+                حفظ التعديل
             </button>
 
             <a asp-action="Index"

@@ -1,0 +1,34 @@
+﻿@model List<AccountingSystem.Models.InventoryReportViewModel>
+
+<h1>تقرير مخزون الأصناف</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>رقم الصنف</th>
+            <th>اسم الصنف</th>
+            <th>الوحدة</th>
+            <th>الكمية المشتراة</th>
+            <th>الكمية المباعة</th>
+            <th>المخزون</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ItemNumber</td>
+                <td>@item.ItemName</td>
+                <td>@item.Unit</td>
+                <td>@item.PurchasedQuantity</td>
+                <td>@item.SoldQuantity</td>
+                <td>@item.StockQuantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+
+<a asp-controller="Home" asp-action="Index">العودة للرئيسية</a>

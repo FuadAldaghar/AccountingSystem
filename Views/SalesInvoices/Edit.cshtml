@@ -4,128 +4,179 @@
     var details = Model.Details.ToList();
 }
 
-<h1>تعديل فاتورة بيع</h1>
-
-<form asp-action="Edit" method="post">
-
-   
-    <input type="hidden" asp-for="SalesInvoiceId" />
-
-    <div asp-validation-summary="All"></div>
-
+<div class="page-header">
     <div>
-        <label>رقم الفاتورة</label>
-        <input asp-for="InvoiceNumber" />
+        <h1>تعديل فاتورة بيع</h1>
+        <p class="text-muted">تعديل بيانات وتفاصيل فاتورة المبيعات</p>
+    </div>
+</div>
+
+<div class="card">
+
+    <div class="card-header">
+        <h2 class="card-title">بيانات الفاتورة</h2>
     </div>
 
-    <br />
+    <form asp-action="Edit" method="post">
 
-    <div>
-        <label>التاريخ</label>
-        <input asp-for="InvoiceDate" type="date" />
+        <input type="hidden"
+               asp-for="SalesInvoiceId" />
+
+          @if (!ViewData.ModelState.IsValid)
+{
+    <div asp-validation-summary="All"
+         class="alert alert-danger">
     </div>
+}
 
-    <br />
+        <div class="invoice-header-grid">
 
-    <div>
-        <label>الدفع</label>
+            <div class="form-group">
+                <label class="form-label">رقم الفاتورة</label>
 
-        <select asp-for="PaymentType">
-            <option value="نقد">نقد</option>
-            <option value="أجل">أجل</option>
-        </select>
-    </div>
+                <input asp-for="InvoiceNumber"
+                       class="form-control" />
+            </div>
 
-    <br />
+            <div class="form-group">
+                <label class="form-label">التاريخ</label>
 
-    <div>
-        <label>الحساب</label>
+                <input asp-for="InvoiceDate"
+                       type="date"
+                       class="form-control" />
+            </div>
 
-        <select asp-for="AccountId">
+            <div class="form-group">
+                <label class="form-label">الدفع</label>
 
-            @foreach (var account in ViewBag.Accounts)
-            {
-                if (account.AccountId == Model.AccountId)
-                {
-                    <option value="@account.AccountId" selected>
-                        @account.AccountNumber - @account.AccountName
-                    </option>
-                }
-                else
-                {
-                    <option value="@account.AccountId">
-                        @account.AccountNumber - @account.AccountName
-                    </option>
-                }
-            }
+                <select asp-for="PaymentType"
+                        class="form-select">
 
-        </select>
-    </div>
+                    <option value="نقد">نقد</option>
+                    <option value="أجل">أجل</option>
 
-    <h3>التفاصيل</h3>
+                </select>
+            </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>الصنف</th>
-                <th>الكمية</th>
-                <th>سعر الوحدة</th>
-            </tr>
-        </thead>
+            <div class="form-group">
+                <label class="form-label">الحساب</label>
 
-        <tbody>
+                <select asp-for="AccountId"
+                        class="form-select">
 
-            @for (int i = 0; i < details.Count; i++)
-            {
-                <tr>
+                    @foreach (var account in ViewBag.Accounts)
+                    {
+                        if (account.AccountId == Model.AccountId)
+                        {
+                            <option value="@account.AccountId"
+                                    selected>
+                                @account.AccountNumber -
+                                @account.AccountName
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@account.AccountId">
+                                @account.AccountNumber -
+                                @account.AccountName
+                            </option>
+                        }
+                    }
 
-                    <td>
-                        <select name="Details[@i].ItemId">
+                </select>
+            </div>
 
-                            @foreach (var item in ViewBag.Items)
-                            {
-                                if (item.ItemId == details[i].ItemId)
-                                {
-                                    <option value="@item.ItemId" selected>
-                                        @item.ItemName
-                                    </option>
-                                }
-                                else
-                                {
-                                    <option value="@item.ItemId">
-                                        @item.ItemName
-                                    </option>
-                                }
-                            }
+        </div>
 
-                        </select>
-                    </td>
+        <div class="invoice-details-card">
 
-                    <td>
-                        <input name="Details[@i].Quantity"
-                               value="@details[i].Quantity"
-                               type="number"
-                               step="0.01" />
-                    </td>
+            <div class="card-header">
+                <h2 class="card-title">تفاصيل الفاتورة</h2>
+            </div>
 
-                    <td>
-                        <input name="Details[@i].UnitPrice"
-                               value="@details[i].UnitPrice"
-                               type="number"
-                               step="0.01" />
-                    </td>
+            <div class="table-container">
 
-                </tr>
-            }
+                <table class="table invoice-table">
 
-        </tbody>
-    </table>
+                    <thead>
+                        <tr>
+                            <th>الصنف</th>
+                            <th>الكمية</th>
+                            <th>سعر الوحدة</th>
+                        </tr>
+                    </thead>
 
-    <br />
+                    <tbody>
 
-    <button type="submit">حفظ التعديل</button>
+                        @for (int i = 0; i < details.Count; i++)
+                        {
+                            <tr>
 
-    <a asp-action="Index">إلغاء</a>
-    
+                                <td>
+                                    <select name="Details[@i].ItemId"
+                                            class="form-select">
 
-</form>
+                                        @foreach (var item in ViewBag.Items)
+                                        {
+                                            if (item.ItemId == details[i].ItemId)
+                                            {
+                                                <option value="@item.ItemId"
+                                                        selected>
+                                                    @item.ItemName
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.ItemId">
+                                                    @item.ItemName
+                                                </option>
+                                            }
+                                        }
+
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <input name="Details[@i].Quantity"
+                                           value="@details[i].Quantity"
+                                           class="form-control"
+                                           type="number"
+                                           step="0.01" />
+                                </td>
+
+                                <td>
+                                    <input name="Details[@i].UnitPrice"
+                                           value="@details[i].UnitPrice"
+                                           class="form-control"
+                                           type="number"
+                                           step="0.01" />
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit"
+                    class="btn btn-primary">
+                حفظ التعديل
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                إلغاء
+            </a>
+
+        </div>
+
+    </form>
+
+</div>

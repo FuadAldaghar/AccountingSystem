@@ -1,62 +1,98 @@
 ﻿@model AccountingSystem.Models.ReceiptVoucher
 
-<h1>تعديل سند قبض</h1>
-
-<form asp-action="Edit" method="post">
-
-    <input type="hidden" asp-for="ReceiptVoucherId" />
-
+<div class="page-header">
     <div>
-        <label>رقم السند</label>
-        <input asp-for="VoucherNumber" />
-        <span asp-validation-for="VoucherNumber"></span>
+        <h1>تعديل سند قبض</h1>
+        <p class="text-muted">تعديل بيانات سند القبض</p>
+    </div>
+</div>
+
+<div class="card">
+
+    <div class="card-header">
+        <h2 class="card-title">بيانات سند القبض</h2>
     </div>
 
-    <br />
+    <form asp-action="Edit" method="post">
 
-    <div>
-        <label>التاريخ</label>
-        <input asp-for="VoucherDate" type="date" />
-        <span asp-validation-for="VoucherDate"></span>
-    </div>
+        <input type="hidden"
+               asp-for="ReceiptVoucherId" />
 
-    <br />
+        <div class="form-group">
+            <label class="form-label">رقم السند</label>
 
-    <div>
-        <label>المبلغ</label>
-        <input asp-for="Amount" type="number" step="0.01" />
-        <span asp-validation-for="Amount"></span>
-    </div>
+            <input asp-for="VoucherNumber"
+                   class="form-control" />
 
-    <br />
+            <span asp-validation-for="VoucherNumber"
+                  class="text-danger">
+            </span>
+        </div>
 
-    <div>
-        <label>الحساب</label>
+        <div class="form-group">
+            <label class="form-label">التاريخ</label>
 
-        <select asp-for="AccountId">
+            <input asp-for="VoucherDate"
+                   type="date"
+                   class="form-control" />
 
-            @foreach (var account in ViewBag.Accounts)
-            {
-                <option value="@account.AccountId">
-                    @account.AccountNumber - @account.AccountName
-                </option>
-            }
+            <span asp-validation-for="VoucherDate"
+                  class="text-danger">
+            </span>
+        </div>
 
-        </select>
+        <div class="form-group">
+            <label class="form-label">المبلغ</label>
 
-    </div>
+            <input asp-for="Amount"
+                   type="number"
+                   step="0.01"
+                   class="form-control" />
 
-    <br />
+            <span asp-validation-for="Amount"
+                  class="text-danger">
+            </span>
+        </div>
 
-    <div>
-        <label>ملاحظات</label>
-        <textarea asp-for="Notes"></textarea>
-    </div>
+        <div class="form-group">
+            <label class="form-label">الحساب</label>
 
-    <br />
+            <select asp-for="AccountId"
+                    class="form-select">
 
-    <button type="submit">حفظ التعديل</button>
+                @foreach (var account in ViewBag.Accounts)
+                {
+                    <option value="@account.AccountId">
+                        @account.AccountNumber - @account.AccountName
+                    </option>
+                }
 
-    <a asp-action="Index">إلغاء</a>
+            </select>
 
-</form>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">ملاحظات</label>
+
+            <textarea asp-for="Notes"
+                      class="form-control">
+            </textarea>
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit"
+                    class="btn btn-primary">
+                حفظ التعديل
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                إلغاء
+            </a>
+
+        </div>
+
+    </form>
+
+</div>

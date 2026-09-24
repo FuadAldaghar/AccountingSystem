@@ -8,136 +8,285 @@
                 ?? Enumerable.Empty<AccountingSystem.Models.Item>();
 }
 
-<h1>إضافة فاتورة شراء</h1>
+<div class="page-header">
+    <div>
+        <h1>إضافة فاتورة شراء</h1>
+        <p class="text-muted">إنشاء فاتورة مشتريات جديدة</p>
+    </div>
+</div>
 
 <form asp-action="Create" method="post">
 
-    <div asp-validation-summary="All"></div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div asp-validation-summary="All"
+             class="alert alert-danger">
+        </div>
+    }
 
-    <div>
-        <label>رقم الفاتورة</label>
-        <input asp-for="InvoiceNumber" />
+    <div class="card">
+
+        <div class="card-header">
+            <h2 class="card-title">بيانات الفاتورة</h2>
+        </div>
+
+        <div class="invoice-header-grid">
+
+            <div class="form-group">
+                <label class="form-label">رقم الفاتورة</label>
+
+                <input asp-for="InvoiceNumber"
+                       class="form-control" />
+
+                <span asp-validation-for="InvoiceNumber"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">التاريخ</label>
+
+                <input asp-for="InvoiceDate"
+                       type="date"
+                       class="form-control" />
+
+                <span asp-validation-for="InvoiceDate"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">الدفع</label>
+
+                <select asp-for="PaymentType"
+                        class="form-select">
+
+                    <option value="نقد">نقد</option>
+                    <option value="أجل">أجل</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">الحساب</label>
+
+                <select asp-for="AccountId"
+                        class="form-select">
+
+                    <option value="0">
+                        -- اختر الحساب --
+                    </option>
+
+                    @foreach (var account in accounts)
+                    {
+                        <option value="@account.AccountId">
+                            @account.AccountNumber - @account.AccountName
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="AccountId"
+                      class="text-danger">
+                </span>
+            </div>
+
+        </div>
+
     </div>
 
-    <br />
 
-    <div>
-        <label>التاريخ</label>
-        <input asp-for="InvoiceDate" type="date" />
+    <div class="card invoice-details-card">
+
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">تفاصيل الفاتورة</h2>
+                <span class="text-muted">
+                    أضف الأصناف والكميات والأسعار
+                </span>
+            </div>
+        </div>
+
+        <div class="table-container">
+
+            <table class="table invoice-table">
+
+                <thead>
+                    <tr>
+                        <th>الصنف</th>
+                        <th>الوحدة</th>
+                        <th>الكمية</th>
+                        <th>سعر الوحدة</th>
+                        <th>الإجمالي</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <tr class="detail-row">
+
+                            <td>
+                                <select name="Details[@i].ItemId"
+                                        class="form-select item-select"
+                                        data-unit-target="unit-@i">
+
+                                    <option value="0">
+                                        -- اختر الصنف --
+                                    </option>
+
+                                    @foreach (var item in items)
+                                    {
+                                        <option value="@item.ItemId"
+                                                data-unit="@item.Unit">
+
+                                            @item.ItemName
+
+                                        </option>
+                                    }
+
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="unit-@i"
+                                       class="form-control unit-input"
+                                       readonly />
+                            </td>
+
+                            <td>
+                                <input name="Details[@i].Quantity"
+                                       class="form-control quantity-input"
+                                       type="number"
+                                       step="0.01"
+                                       min="0"
+                                       value="0" />
+                            </td>
+
+                            <td>
+                                <input name="Details[@i].UnitPrice"
+                                       class="form-control price-input"
+                                       type="number"
+                                       step="0.01"
+                                       min="0"
+                                       value="0" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       class="form-control line-total"
+                                       value="0.00"
+                                       readonly />
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+                <tfoot>
+
+                    <tr>
+                        <th colspan="4">
+                            إجمالي الفاتورة
+                        </th>
+
+                        <th>
+                            <input type="text"
+                                   id="grand-total"
+                                   class="form-control invoice-grand-total"
+                                   value="0.00"
+                                   readonly />
+                        </th>
+                    </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit"
+                    class="btn btn-primary">
+                حفظ الفاتورة
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                إلغاء
+            </a>
+
+        </div>
+
     </div>
-
-    <br />
-
-    <div>
-        <label>الدفع</label>
-
-        <select asp-for="PaymentType">
-            <option value="نقد">نقد</option>
-            <option value="أجل">أجل</option>
-        </select>
-    </div>
-
-    <br />
-
-    <div>
-        <label>الحساب</label>
-
-        <select asp-for="AccountId">
-            <option value="">-- اختر الحساب --</option>
-
-            @foreach (var account in accounts)
-            {
-                <option value="@account.AccountId">
-                    @account.AccountNumber - @account.AccountName
-                </option>
-            }
-        </select>
-    </div>
-
-    <h3>تفاصيل الفاتورة</h3>
-
-    <table>
-        <thead>
-            <tr>
-                <th>الصنف</th>
-                <th>الوحدة</th>
-                <th>الكمية</th>
-                <th>سعر الوحدة</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @for (int i = 0; i < 5; i++)
-            {
-                <tr>
-
-                    <td>
-                        <select name="Details[@i].ItemId"
-                                class="item-select"
-                                data-unit-target="unit-@i">
-
-                            <option value="">-- اختر الصنف --</option>
-
-                            @foreach (var item in items)
-                            {
-                                <option value="@item.ItemId"
-                                        data-unit="@item.Unit">
-                                    @item.ItemName
-                                </option>
-                            }
-
-                        </select>
-                    </td>
-
-                    <td>
-                        <input type="text"
-                               id="@i"
-                               class="unit-input"
-                               readonly />
-                    </td>
-
-                    <td>
-                        <input name="Details[@i].Quantity"
-                               type="number"
-                               step="0.01"
-                               min="0" />
-                    </td>
-
-                    <td>
-                        <input name="Details[@i].UnitPrice"
-                               type="number"
-                               step="0.01"
-                               min="0" />
-                    </td>
-
-                </tr>
-            }
-
-        </tbody>
-    </table>
-
-    <br />
-
-    <button type="submit">حفظ الفاتورة</button>
-
-    <a asp-action="Index">إلغاء</a>
 
 </form>
 
+
 <script>
+
+    function calculateTotals() {
+
+        var grandTotal = 0;
+
+        document.querySelectorAll(".detail-row").forEach(function (row) {
+
+            var quantity = parseFloat(
+                row.querySelector(".quantity-input").value
+            ) || 0;
+
+            var price = parseFloat(
+                row.querySelector(".price-input").value
+            ) || 0;
+
+            var lineTotal = quantity * price;
+
+            row.querySelector(".line-total").value =
+                lineTotal.toFixed(2);
+
+            grandTotal += lineTotal;
+        });
+
+        document.getElementById("grand-total").value =
+            grandTotal.toFixed(2);
+    }
+
+
     document.querySelectorAll(".item-select").forEach(function (select) {
 
         select.addEventListener("change", function () {
 
-            var selectedOption = this.options[this.selectedIndex];
+            var selectedOption =
+                this.options[this.selectedIndex];
 
-            var unit = selectedOption.getAttribute("data-unit") || "";
+            var unit =
+                selectedOption.getAttribute("data-unit") || "";
 
-            var targetId = this.getAttribute("data-unit-target");
+            var targetId =
+                this.getAttribute("data-unit-target");
 
             document.getElementById(targetId).value = unit;
         });
 
     });
+
+
+    document.querySelectorAll(
+        ".quantity-input, .price-input"
+    ).forEach(function (input) {
+
+        input.addEventListener(
+            "input",
+            calculateTotals
+        );
+
+    });
+
+
+    calculateTotals();
+
 </script>

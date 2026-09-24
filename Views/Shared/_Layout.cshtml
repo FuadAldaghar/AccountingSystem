@@ -6,75 +6,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>@ViewData["Title"] - نظام المحاسبة</title>
+
+    <link rel="stylesheet" href="~/css/variables.css" />
+    <link rel="stylesheet" href="~/css/base.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="stylesheet" href="~/css/components.css" />
+    <link rel="stylesheet" href="~/css/pages.css" />
 </head>
 
 <body>
 
-    <header>
+    <!-- Header -->
+    <header class="app-header">
 
-        <h1>نظام المحاسبة</h1>
+        <div class="app-logo">
+            <span>نظام المحاسبة</span>
+        </div>
 
-        <nav>
-            <a asp-controller="Home" asp-action="Index">
-                الرئيسية
-            </a>
-
-            |
-
-            <a asp-controller="Accounts" asp-action="Index">
-                دليل الحسابات
-            </a>
-
-            |
-
-            <a asp-controller="Items" asp-action="Index">
-                دليل الأصناف
-            </a>
-
-            |
-
-            <a asp-controller="ReceiptVouchers" asp-action="Index">
-                سندات القبض
-            </a>
-
-            |
-
-            <a asp-controller="PaymentVouchers" asp-action="Index">
-                سندات الصرف
-            </a>
-
-            |
-
-            <a asp-controller="PurchaseInvoices" asp-action="Index">
-                فواتير المشتريات
-            </a>
-
-            |
-
-            <a asp-controller="SalesInvoices" asp-action="Index">
-                فواتير المبيعات
-            </a>
-
-            |
-
-            <a asp-controller="Reports" asp-action="Inventory">
-                تقرير المخزون
-            </a>
-
-            |
-
-            <a asp-controller="Reports" asp-action="AccountStatement">
-                كشف الحساب
-            </a>
-        </nav>
+        <div class="app-header-title">
+            @ViewData["Title"]
+        </div>
 
     </header>
 
-    <hr />
 
-    <main>
-        @RenderBody()
-    </main>
+    <!-- Application Container -->
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <nav class="sidebar-nav">
+
+                <a class="sidebar-link"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    الرئيسية
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="Accounts"
+                   asp-action="Index">
+                    دليل الحسابات
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="Items"
+                   asp-action="Index">
+                    دليل الأصناف
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="ReceiptVouchers"
+                   asp-action="Index">
+                    سندات القبض
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="PaymentVouchers"
+                   asp-action="Index">
+                    سندات الصرف
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="PurchaseInvoices"
+                   asp-action="Index">
+                    فواتير المشتريات
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="SalesInvoices"
+                   asp-action="Index">
+                    فواتير المبيعات
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="Reports"
+                   asp-action="Inventory">
+                    تقرير المخزون
+                </a>
+
+                <a class="sidebar-link"
+                   asp-controller="Reports"
+                   asp-action="AccountStatement">
+                    كشف الحساب
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="page-container">
+
+                @RenderBody()
+
+            </div>
+
+        </main>
+
+    </div>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 
